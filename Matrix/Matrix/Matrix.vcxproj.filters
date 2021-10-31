@@ -18,10 +18,14 @@
     <ClInclude Include="cudaStatus.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="utils\matrix\Matrix.hpp" />
+    <ClInclude Include="utils\IOManager\MatrixIOManager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="userInterface.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="utils\matrix\Matrix.cpp" />
+    <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
   </ItemGroup>
 </Project>

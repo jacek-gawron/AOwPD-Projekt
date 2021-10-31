@@ -81,10 +81,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cudaStatus.hpp" />
+    <ClInclude Include="utils\IOManager\MatrixIOManager.hpp" />
     <ClInclude Include="userInterface.hpp" />
+    <ClInclude Include="utils\matrix\Matrix.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
     <ClCompile Include="userInterface.cpp" />
+    <ClCompile Include="utils\matrix\Matrix.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,6 +6,7 @@
 #include <cuda_runtime.h>
 #include "userInterface.hpp"
 #include "cudaStatus.hpp"
+#include "utils/IOManager/MatrixIOManager.hpp"
 
 UserInterface::UserInterface() {
 
@@ -77,6 +78,7 @@ void UserInterface::printMainMenu() {
     menu.append("[0]. Exit\n");
     menu.append(">");
 
+    MatrixIOManager io_manager;
 
     char result = 'a';
     do {
@@ -86,6 +88,9 @@ void UserInterface::printMainMenu() {
         switch (result) {
         case '1': {
             printf("load\n");
+            Matrix m = io_manager.loadMatrix("test.txt");
+            m.display();
+            io_manager.saveMatrix(m);
             break;
         }
         case '2': {
