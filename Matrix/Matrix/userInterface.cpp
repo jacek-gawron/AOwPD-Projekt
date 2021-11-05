@@ -6,16 +6,16 @@
 #include <cuda_runtime.h>
 #include "userInterface.hpp"
 #include "cudaStatus.hpp"
-#include "utils/IOManager/MatrixIOManager.hpp"
 
 UserInterface::UserInterface() {
 
 }
 
 bool UserInterface::detectGpu() {
-    int devicesCount = 0;
-    CUDA_STATUS(cudaGetDeviceCount(&devicesCount));
-    return devicesCount > 0;
+   // int devicesCount = 0;
+   // CUDA_STATUS(cudaGetDeviceCount(&devicesCount));
+   // return devicesCount > 0;
+  return true;
 }
 
 void UserInterface::printTestMenu() {
@@ -70,7 +70,7 @@ void UserInterface::printMainMenu() {
     std::string menu = "---Operations on Matrices---\n";
     menu.append("[1]. Load matrices\n");
     menu.append("[2]. Print matrices\n");
-    menu.append("[3]. Matrix addition/subtraction\n");
+    menu.append("[3]. Matrix addition\n");
     menu.append("[4]. Matrix multiplication\n");
     menu.append("[5]. Matrix transposition\n");
     menu.append("[6]. Matrix inverse\n");
@@ -78,7 +78,6 @@ void UserInterface::printMainMenu() {
     menu.append("[0]. Exit\n");
     menu.append(">");
 
-    MatrixIOManager io_manager;
 
     char result = 'a';
     do {
@@ -88,17 +87,59 @@ void UserInterface::printMainMenu() {
         switch (result) {
         case '1': {
             printf("load\n");
-            Matrix m = io_manager.loadMatrix("test.txt");
+            Matrix m = ioManager.loadMatrix("test.txt");
+            loadedMatrices.push_back(m);
             m.display();
-            io_manager.saveMatrix(m);
             break;
         }
         case '2': {
             printf("print\n");
+
+            for (int i{0}; i < loadedMatrices.size(); i++) {
+                printf("Matrix: %d \tName: %s\n", i, loadedMatrices[i].get_matrix_name().c_str());
+                loadedMatrices[i].display();
+                printf("\n\n");
+            }
             break;
         }
         case '3': {
+            int aId, bId;
             printf("add\n");
+            printf("Index of first matrix\n>");
+            scanf("%d", &aId);
+            printf("Index of second matrix\n>");
+            scanf("%d", &bId);
+            try {
+                printf("Matrix %d:\n", aId);
+                loadedMatrices[aId].display();
+                printf("\nMatrix %d:\n", bId);
+                loadedMatrices[bId].display();
+                printf("\n\n");
+
+                adder.set_matrices(loadedMatrices[aId], loadedMatrices[bId]);
+
+                adder.add_matrices_CPU_single_thread();
+                Matrix m = adder.get_result();
+                m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
+                ioManager.saveMatrix(m);
+                printf("Single thread result\n");
+                m.display();
+                printf("\n\n");
+
+                adder.add_matrices_CPU_multi_thread();
+                m = adder.get_result();
+                m.set_matrix_name(m.get_matrix_name() +
+                                  "_multiThreadCPU(threads: " +
+                                  std::to_string(adder.get_num_of_threads()) + ")");
+                ioManager.saveMatrix(m);
+                printf("Multi thread result (threads: %d)\n",
+                       adder.get_num_of_threads());
+                m.display();
+                printf("\n\n");
+
+            } catch (std::exception e) {
+                printf("Error occured: %s", e.what());
+            }
             break;
         }
         case '4': {

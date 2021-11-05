@@ -20,6 +20,7 @@
     </ClInclude>
     <ClInclude Include="utils\matrix\Matrix.hpp" />
     <ClInclude Include="utils\IOManager\MatrixIOManager.hpp" />
+    <ClInclude Include="adding\MatrixAdderComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="userInterface.cpp">
@@ -27,5 +28,6 @@
     </ClCompile>
     <ClCompile Include="utils\matrix\Matrix.cpp" />
     <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
+    <ClCompile Include="adding\MatrixAdderComponent.cpp" />
   </ItemGroup>
 </Project>

@@ -51,6 +51,14 @@ Matrix& Matrix::operator=(const Matrix& src) {
   
   if (&src != this) {
     this->~Matrix();
+    this->dim_x = src.dim_x;
+    this->dim_y = src.dim_y;
+    this->matrix_name = src.matrix_name;
+
+    this->matrix = new float*[dim_y];
+    for (int i = 0; i < dim_y; i++) {
+      this->matrix[i] = new float[dim_x];
+    }
     this->fill_from(src);
   }
   return *this;

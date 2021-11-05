@@ -81,11 +81,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cudaStatus.hpp" />
+    <ClInclude Include="adding\MatrixAdderComponent.h" />
     <ClInclude Include="utils\IOManager\MatrixIOManager.hpp" />
     <ClInclude Include="userInterface.hpp" />
     <ClInclude Include="utils\matrix\Matrix.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="adding\MatrixAdderComponent.cpp" />
     <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
     <ClCompile Include="userInterface.cpp" />
     <ClCompile Include="utils\matrix\Matrix.cpp" />
