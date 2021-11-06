@@ -28,6 +28,6 @@
     </ClCompile>
     <ClCompile Include="utils\matrix\Matrix.cpp" />
     <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
-    <ClCompile Include="adding\MatrixAdderComponent.cpp" />
+    <ClCompile Include="adding\MatrixAdderComponent.cu" />
   </ItemGroup>
 </Project>

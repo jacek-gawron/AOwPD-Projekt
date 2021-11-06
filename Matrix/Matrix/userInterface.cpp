@@ -12,10 +12,10 @@ UserInterface::UserInterface() {
 }
 
 bool UserInterface::detectGpu() {
-   // int devicesCount = 0;
-   // CUDA_STATUS(cudaGetDeviceCount(&devicesCount));
-   // return devicesCount > 0;
-  return true;
+    int devicesCount = 0;
+    CUDA_STATUS(cudaGetDeviceCount(&devicesCount));
+    return devicesCount > 0;
+   // return true;
 }
 
 void UserInterface::printTestMenu() {
