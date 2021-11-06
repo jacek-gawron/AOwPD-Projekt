@@ -2,6 +2,8 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <CudaCompile Include="main.cu" />
+    <CudaCompile Include="adding\MatrixAdderComponent.cu" />
+    <CudaCompile Include="transposing\MatrixTransposerComponent.cu" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -29,7 +31,6 @@
     </ClCompile>
     <ClCompile Include="utils\matrix\Matrix.cpp" />
     <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
-    <ClCompile Include="adding\MatrixAdderComponent.cpp" />
-    <ClCompile Include="transposing\MatrixTransposerComponent.cpp" />
+    
   </ItemGroup>
 </Project>

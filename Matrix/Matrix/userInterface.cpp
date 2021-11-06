@@ -157,16 +157,15 @@ void UserInterface::printMainMenu() {
 
                 transposer.set_matrix(loadedMatrices[aId]);
 
-                Matrix m = transposer.get_result();
-                /*transposer.transpose_matrix_CPU_single_thread();
+                transposer.transpose_matrix_CPU_single_thread();
                 Matrix m = transposer.get_result();
                 m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
                 ioManager.saveMatrix(m);
                 printf("Single thread result\n");
                 m.display();
-                printf("\n\n");*/
+                printf("\n\n");
 
-                transposer.transpose_matrix_CPU_multi_thread();
+                /*transposer.transpose_matrix_CPU_multi_thread();
                 m = transposer.get_result();
                 m.set_matrix_name(m.get_matrix_name() +
                     "_multiThreadCPU(threads: " +
@@ -175,7 +174,7 @@ void UserInterface::printMainMenu() {
                 printf("Multi thread result (threads: %d)\n",
                     adder.get_num_of_threads());
                 m.display();
-                printf("\n\n");
+                printf("\n\n");*/
             }
             catch (std::exception err) {
                 printf("Error occured: %s", err.what());
