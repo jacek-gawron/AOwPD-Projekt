@@ -1,6 +1,7 @@
 #pragma once
 #include "utils/IOManager/MatrixIOManager.hpp"
 #include "adding/MatrixAdderComponent.h"
+#include "transposing/MatrixTransposerComponent.h"
 #include <vector>
 
 class UserInterface {
@@ -13,6 +14,7 @@ public:
 
 private:
     MatrixAdderComponent adder;
+    MatrixTransposerComponent transposer;
     MatrixIOManager ioManager;
 
     std::vector<Matrix> loadedMatrices;

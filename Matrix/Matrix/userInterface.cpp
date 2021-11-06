@@ -147,7 +147,39 @@ void UserInterface::printMainMenu() {
             break;
         }
         case '5': {
+            int aId;
             printf("transpose\n");
+            printf("Index of matrix to transpose\n>");
+            scanf("%d", &aId);
+            try {
+                printf("Matrix %d:\n", aId);
+                loadedMatrices[aId].display();
+
+                transposer.set_matrix(loadedMatrices[aId]);
+
+                Matrix m = transposer.get_result();
+                /*transposer.transpose_matrix_CPU_single_thread();
+                Matrix m = transposer.get_result();
+                m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
+                ioManager.saveMatrix(m);
+                printf("Single thread result\n");
+                m.display();
+                printf("\n\n");*/
+
+                transposer.transpose_matrix_CPU_multi_thread();
+                m = transposer.get_result();
+                m.set_matrix_name(m.get_matrix_name() +
+                    "_multiThreadCPU(threads: " +
+                    std::to_string(adder.get_num_of_threads()) + ")");
+                ioManager.saveMatrix(m);
+                printf("Multi thread result (threads: %d)\n",
+                    adder.get_num_of_threads());
+                m.display();
+                printf("\n\n");
+            }
+            catch (std::exception err) {
+                printf("Error occured: %s", err.what());
+            }
             break;
         }
         case '6': {

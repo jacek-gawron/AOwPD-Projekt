@@ -21,6 +21,7 @@
     <ClInclude Include="utils\matrix\Matrix.hpp" />
     <ClInclude Include="utils\IOManager\MatrixIOManager.hpp" />
     <ClInclude Include="adding\MatrixAdderComponent.h" />
+    <ClInclude Include="transposing\MatrixTransposerComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="userInterface.cpp">
@@ -29,5 +30,6 @@
     <ClCompile Include="utils\matrix\Matrix.cpp" />
     <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
     <ClCompile Include="adding\MatrixAdderComponent.cpp" />
+    <ClCompile Include="transposing\MatrixTransposerComponent.cpp" />
   </ItemGroup>
 </Project>
