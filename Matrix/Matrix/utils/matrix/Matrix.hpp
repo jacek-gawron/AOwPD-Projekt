@@ -22,7 +22,7 @@ class Matrix {
   void display();
 
  private:
-  float** matrix{nullptr};
+  float* matrix{nullptr};
   int dim_x, dim_y;
 
   std::string matrix_name;

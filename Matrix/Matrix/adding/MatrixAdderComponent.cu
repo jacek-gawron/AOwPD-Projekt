@@ -1,3 +1,5 @@
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
 #include "MatrixAdderComponent.h"
 #include <stdexcept>
 #include <thread>
@@ -38,8 +40,17 @@ void MatrixAdderComponent::add_matrices_CPU_multi_thread() {
  }
 
 void MatrixAdderComponent::add_matrices_GPU() {
-
-}
+  float **a_GPU_pointer, **b_GPU_pointer, **out_GPU_pointer;
+  int num_of_bytes =
+      output.get_x_dimension() * output.get_y_dimension() * sizeof(float);
+  cudaMalloc((void **)&a_GPU_pointer, num_of_bytes);
+  cudaMalloc((void **)&b_GPU_pointer, num_of_bytes);
+  cudaMalloc((void **)&out_GPU_pointer, num_of_bytes);
+  /*
+  cudaMemcpy(a_GPU_pointer, a[0], num_of_bytes, cudaMemcpyHostToDevice);
+  cudaMemcpy(b_GPU_pointer, A, num_of_bytes, cudaMemcpyHostToDevice);
+  cudaMemcpy(out_GPU_pointer, A, num_of_bytes, cudaMemcpyHostToDevice);*/
+ }
 
 Matrix MatrixAdderComponent::get_result() { return output; }
 
@@ -50,7 +61,11 @@ void MatrixAdderComponent::thread_CPU_fun(int thread_id) {
       output[i][j] = a[i][j] + b[i][j];
     } 
   }
-    
-      
 }
 
+__global__ void add_GPU( float *a, float *b, float *out, size_t dim_x, size_t dim_y) {
+  int i = threadIdx.x;
+  //int j = threadIdx.y;
+
+  //out[i][j] = a[i][j] + b[i][j];
+}
