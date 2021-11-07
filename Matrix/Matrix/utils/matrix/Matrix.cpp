@@ -18,9 +18,9 @@ Matrix::Matrix(std::string matrix_name, int dimension_x, int dimension_y,
     for (int j = 0; j < dim_x; j++) {
       bool fill_zeros_cell = (j >= arr[i].size());
       if (fill_zeros_row || fill_zeros_cell) {
-        matrix[i * dim_y + j] = 0.0f;
+        matrix[i * dim_x + j] = 0.0f;
       } else {
-        matrix[i * dim_y + j] = arr[i][j];
+        matrix[i * dim_x + j] = arr[i][j];
       }
     }
   }
@@ -38,8 +38,7 @@ Matrix::Matrix(const Matrix& src):
 }
 
 float* Matrix::operator[](int index) { 
-  return &(this->matrix[index*dim_y]);
-}
+  return &(this->matrix[index * dim_x]); }
 
 Matrix& Matrix::operator=(const Matrix& src) {
   
@@ -58,7 +57,7 @@ Matrix& Matrix::operator=(const Matrix& src) {
 void Matrix::display() {
   for (int i = 0; i < dim_y; i++) {
     for (int j = 0; j < dim_x; j++) {
-      std::cout << matrix[i* dim_y + j] << '\t';
+      std::cout << matrix[i * dim_x + j] << '\t';
     }
     std::cout << std::endl;
   }
@@ -68,7 +67,7 @@ void Matrix::display() {
 void Matrix::fill_from(const Matrix& src) {
   for (int i = 0; i < this->dim_y; ++i) {
     for (int j = 0; j < this->dim_x; ++j) {
-      this->matrix[i * dim_y + j] = src.matrix[i * dim_y + j];
+      this->matrix[i * dim_x + j] = src.matrix[i * dim_x + j];
     }
   }
 }
