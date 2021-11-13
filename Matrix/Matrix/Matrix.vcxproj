@@ -90,12 +90,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="main.cu" />
+    <CudaCompile Include="multiplying\MatrixMultiplierComponent.cu" />
     <CudaCompile Include="transposing\MatrixTransposerComponent.cu" />
     <CudaCompile Include="adding\MatrixAdderComponent.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cudaStatus.hpp" />
     <ClInclude Include="adding\MatrixAdderComponent.h" />
+    <ClInclude Include="multiplying\MatrixMultiplierComponent.h" />
     <ClInclude Include="transposing\MatrixTransposerComponent.h" />
     <ClInclude Include="utils\IOManager\MatrixIOManager.hpp" />
     <ClInclude Include="userInterface.hpp" />

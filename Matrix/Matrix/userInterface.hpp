@@ -1,6 +1,7 @@
 #pragma once
 #include "utils/IOManager/MatrixIOManager.hpp"
 #include "adding/MatrixAdderComponent.h"
+#include "multiplying/MatrixMultiplierComponent.h"
 #include "transposing/MatrixTransposerComponent.h"
 #include <vector>
 
@@ -14,6 +15,7 @@ public:
 
 private:
     MatrixAdderComponent adder;
+    MatrixMultiplierComponent multiplier;
     MatrixTransposerComponent transposer;
     MatrixIOManager ioManager;
 
