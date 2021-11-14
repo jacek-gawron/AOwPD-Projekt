@@ -20,7 +20,7 @@ __global__ void add_GPU(float *a, float *b, float *out, size_t dim_x,
 void MatrixAdderComponent::set_matrices(Matrix a, Matrix b) { 
   if (a.get_x_dimension() != b.get_x_dimension() ||
       a.get_y_dimension() != b.get_y_dimension()) {
-    throw std::invalid_argument("Dimensions of amtrices must be the same.");
+    throw std::invalid_argument("Dimensions of matrices must be the same.");
   }
   this->a = a;
   this->b = b;
