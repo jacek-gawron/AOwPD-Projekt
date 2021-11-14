@@ -5,6 +5,18 @@
 #include <thread>
 #include <vector>
 
+__global__ void add_GPU(float *a, float *b, float *out, size_t dim_x,
+                        size_t dim_y) {
+  int i = blockIdx.x * blockDim.x + threadIdx.x;
+  int j = blockIdx.y * blockDim.y + threadIdx.y;
+  // int i = threadIdx.x;
+  // int j = threadIdx.y;
+
+  if (i < dim_x && j < dim_y) {
+    out[j * dim_y + i] = a[j * dim_y + i] + b[j * dim_y + i];
+  }
+}
+
 void MatrixAdderComponent::set_matrices(Matrix a, Matrix b) { 
   if (a.get_x_dimension() != b.get_x_dimension() ||
       a.get_y_dimension() != b.get_y_dimension()) {
@@ -40,16 +52,22 @@ void MatrixAdderComponent::add_matrices_CPU_multi_thread() {
  }
 
 void MatrixAdderComponent::add_matrices_GPU() {
-  float **a_GPU_pointer, **b_GPU_pointer, **out_GPU_pointer;
+  float *a_GPU_pointer, *b_GPU_pointer, *out_GPU_pointer;
   int num_of_bytes =
       output.get_x_dimension() * output.get_y_dimension() * sizeof(float);
   cudaMalloc((void **)&a_GPU_pointer, num_of_bytes);
   cudaMalloc((void **)&b_GPU_pointer, num_of_bytes);
   cudaMalloc((void **)&out_GPU_pointer, num_of_bytes);
-  /*
+  
   cudaMemcpy(a_GPU_pointer, a[0], num_of_bytes, cudaMemcpyHostToDevice);
-  cudaMemcpy(b_GPU_pointer, A, num_of_bytes, cudaMemcpyHostToDevice);
-  cudaMemcpy(out_GPU_pointer, A, num_of_bytes, cudaMemcpyHostToDevice);*/
+  cudaMemcpy(b_GPU_pointer, b[0], num_of_bytes, cudaMemcpyHostToDevice);
+  const int num_of_thread_blocks =
+      (output.get_x_dimension() * output.get_y_dimension() + 1) / 256;
+  
+  add_GPU<<<num_of_thread_blocks, 256>>>(
+      a_GPU_pointer, b_GPU_pointer, out_GPU_pointer,
+                     output.get_x_dimension(), output.get_y_dimension());
+  cudaMemcpy(out_GPU_pointer, output[0], num_of_bytes, cudaMemcpyHostToDevice);
  }
 
 Matrix MatrixAdderComponent::get_result() { return output; }
@@ -61,11 +79,4 @@ void MatrixAdderComponent::thread_CPU_fun(int thread_id) {
       output[i][j] = a[i][j] + b[i][j];
     } 
   }
-}
-
-__global__ void add_GPU( float *a, float *b, float *out, size_t dim_x, size_t dim_y) {
-  int i = threadIdx.x;
-  //int j = threadIdx.y;
-
-  //out[i][j] = a[i][j] + b[i][j];
 }

@@ -137,6 +137,15 @@ void UserInterface::printMainMenu() {
                 m.display();
                 printf("\n\n");
 
+                adder.add_matrices_GPU();
+                m = adder.get_result();
+                m.set_matrix_name(
+                    m.get_matrix_name() + "_GPU");
+                ioManager.saveMatrix(m);
+                printf("GPU result:\n");
+                m.display();
+                printf("\n\n");
+
             } catch (std::exception e) {
                 printf("Error occured: %s", e.what());
             }
