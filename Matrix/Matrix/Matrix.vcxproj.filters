@@ -4,6 +4,7 @@
     <CudaCompile Include="main.cu" />
     <CudaCompile Include="adding\MatrixAdderComponent.cu" />
     <CudaCompile Include="transposing\MatrixTransposerComponent.cu" />
+    <CudaCompile Include="multiplying\MatrixMultiplierComponent.cu" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -24,6 +25,7 @@
     <ClInclude Include="utils\IOManager\MatrixIOManager.hpp" />
     <ClInclude Include="adding\MatrixAdderComponent.h" />
     <ClInclude Include="transposing\MatrixTransposerComponent.h" />
+    <ClInclude Include="multiplying\MatrixMultiplierComponent.h" />
     <ClInclude Include="inverse\MatrixInverseComponent.h" />
   </ItemGroup>
   <ItemGroup>

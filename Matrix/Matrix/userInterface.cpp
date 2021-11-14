@@ -87,7 +87,7 @@ void UserInterface::printMainMenu() {
         switch (result) {
         case '1': {
             printf("load\n");
-            Matrix m = ioManager.loadMatrix("test.txt");
+            Matrix m = ioManager.loadMatrix("test1.txt");
             loadedMatrices.push_back(m);
             m.display();
             break;
@@ -152,7 +152,45 @@ void UserInterface::printMainMenu() {
             break;
         }
         case '4': {
+            int aId, bId;
             printf("multiply\n");
+            printf("Index of first matrix\n>");
+            scanf("%d", &aId);
+            printf("Index of second matrix\n>");
+            scanf("%d", &bId);
+            try {
+                printf("Matrix %d:\n", aId);
+                loadedMatrices[aId].display();
+                printf("\nMatrix %d:\n", bId);
+                loadedMatrices[bId].display();
+                printf("\n\n");
+
+                multiplier.set_matrices(loadedMatrices[aId], loadedMatrices[bId]);
+
+                multiplier.multiply_matrices_CPU_single_thread();
+                Matrix m = multiplier.get_result();
+                m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
+                ioManager.saveMatrix(m);
+                printf("Single thread result\n");
+                m.display();
+                printf("\n\n");
+
+
+                multiplier.multiply_matrices_CPU_multi_thread();
+                m = multiplier.get_result();
+                m.set_matrix_name(m.get_matrix_name() +
+                    "_multiThreadCPU(threads: " +
+                    std::to_string(multiplier.get_num_of_threads()) + ")");
+                ioManager.saveMatrix(m);
+                printf("Multi thread result (threads: %d)\n",
+                    multiplier.get_num_of_threads());
+                m.display();
+                printf("\n\n");
+
+            }
+            catch (std::exception e) {
+                printf("Error occured: %s", e.what());
+            }
             break;
         }
         case '5': {
@@ -174,7 +212,7 @@ void UserInterface::printMainMenu() {
                 m.display();
                 printf("\n\n");
 
-                /*transposer.transpose_matrix_CPU_multi_thread();
+                transposer.transpose_matrix_CPU_multi_thread();
                 m = transposer.get_result();
                 m.set_matrix_name(m.get_matrix_name() +
                     "_multiThreadCPU(threads: " +
@@ -183,7 +221,7 @@ void UserInterface::printMainMenu() {
                 printf("Multi thread result (threads: %d)\n",
                     adder.get_num_of_threads());
                 m.display();
-                printf("\n\n");*/
+                printf("\n\n");
             }
             catch (std::exception err) {
                 printf("Error occured: %s", err.what());
