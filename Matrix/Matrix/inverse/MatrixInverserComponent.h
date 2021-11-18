@@ -1,7 +1,7 @@
 #pragma once
 #include "../utils/matrix/Matrix.hpp"
 
-class MatrixInverseComponent {
+class MatrixInverserComponent {
  public:
   void set_matrix(Matrix a);
 
@@ -14,6 +14,6 @@ class MatrixInverseComponent {
   Matrix get_result();
 
  private:
-  Matrix a, output;
+  Matrix a, output, identity;
   unsigned int num_of_cores = 0;
 };

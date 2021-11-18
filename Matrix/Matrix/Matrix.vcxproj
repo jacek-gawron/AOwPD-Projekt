@@ -93,11 +93,13 @@
     <CudaCompile Include="multiplying\MatrixMultiplierComponent.cu" />
     <CudaCompile Include="transposing\MatrixTransposerComponent.cu" />
     <CudaCompile Include="adding\MatrixAdderComponent.cu" />
+    <CudaCompile Include="inverse\MatrixInverserComponent.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cudaStatus.hpp" />
     <ClInclude Include="adding\MatrixAdderComponent.h" />
-    <ClInclude Include="inverse\MatrixInverseComponent.h" />
+    <ClInclude Include="inverse\MatrixInverserComponent.h" />
+    <ClInclude Include="utils\matrix\MatrixUtils.h" />
     <ClInclude Include="multiplying\MatrixMultiplierComponent.h" />
     <ClInclude Include="transposing\MatrixTransposerComponent.h" />
     <ClInclude Include="utils\IOManager\MatrixIOManager.hpp" />
@@ -105,7 +107,7 @@
     <ClInclude Include="utils\matrix\Matrix.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="inverse\MatrixInverseComponent.cu" />
+    <ClCompile Include="utils\matrix\MatrixUtils.cpp" />
     <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
     <ClCompile Include="userInterface.cpp" />
     <ClCompile Include="utils\matrix\Matrix.cpp" />

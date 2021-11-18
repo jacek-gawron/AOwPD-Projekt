@@ -2,7 +2,8 @@
 #include <iostream>
 
 
-Matrix::Matrix(std::string matrix_name, int dimension_x, int dimension_y): 
+Matrix::Matrix(std::string matrix_name, size_t dimension_x, size_t dimension_y)
+    : 
   matrix_name {matrix_name},
   dim_x{dimension_x}, 
   dim_y{dimension_y} {
@@ -10,7 +11,7 @@ Matrix::Matrix(std::string matrix_name, int dimension_x, int dimension_y):
   this->matrix = new float[dim_y*dim_x];
 }
 
-Matrix::Matrix(std::string matrix_name, int dimension_x, int dimension_y,
+Matrix::Matrix(std::string matrix_name, size_t dimension_x, size_t dimension_y,
                std::vector<std::vector<float>> arr)
     : Matrix(matrix_name, dimension_x, dimension_y) {
   for (int i = 0; i < dim_y; i++) {

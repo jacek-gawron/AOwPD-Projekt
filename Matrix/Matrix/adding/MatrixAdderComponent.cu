@@ -61,13 +61,21 @@ void MatrixAdderComponent::add_matrices_GPU() {
   
   cudaMemcpy(a_GPU_pointer, a[0], num_of_bytes, cudaMemcpyHostToDevice);
   cudaMemcpy(b_GPU_pointer, b[0], num_of_bytes, cudaMemcpyHostToDevice);
-  const int num_of_thread_blocks =
-      (output.get_x_dimension() * output.get_y_dimension() + 1) / 256;
+
+  int sq = 16;
+  dim3 dim_grid(output.get_x_dimension() / sq + 1,
+                output.get_y_dimension() / sq + 1);
+  dim3 dim_block(sq, sq);
+
   
-  add_GPU<<<num_of_thread_blocks, 256>>>(
+  add_GPU<<<dim_grid, dim_block>>>(
       a_GPU_pointer, b_GPU_pointer, out_GPU_pointer,
                      output.get_x_dimension(), output.get_y_dimension());
-  cudaMemcpy(out_GPU_pointer, output[0], num_of_bytes, cudaMemcpyHostToDevice);
+  cudaMemcpy(output[0], out_GPU_pointer, num_of_bytes, cudaMemcpyDeviceToHost);
+
+  cudaFree(a_GPU_pointer);
+  cudaFree(b_GPU_pointer);
+  cudaFree(out_GPU_pointer);
  }
 
 Matrix MatrixAdderComponent::get_result() { return output; }

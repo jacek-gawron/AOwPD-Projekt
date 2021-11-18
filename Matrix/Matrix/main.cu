@@ -8,6 +8,7 @@
 
 int main()
 {
+    printf("Neet\n");
     UserInterface ui = UserInterface();
     printf("Detecting GPU...\n");
     if (ui.detectGpu()) {

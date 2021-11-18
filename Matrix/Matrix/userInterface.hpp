@@ -3,6 +3,7 @@
 #include "adding/MatrixAdderComponent.h"
 #include "multiplying/MatrixMultiplierComponent.h"
 #include "transposing/MatrixTransposerComponent.h"
+#include "inverse/MatrixInverserComponent.h"
 #include <vector>
 
 class UserInterface {
@@ -15,6 +16,7 @@ public:
 
 private:
     MatrixAdderComponent adder;
+    MatrixInverserComponent inverser;
     MatrixMultiplierComponent multiplier;
     MatrixTransposerComponent transposer;
     MatrixIOManager ioManager;

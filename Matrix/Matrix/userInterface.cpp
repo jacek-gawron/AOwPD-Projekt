@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string>
 #include <windows.h>
+#include <iostream>
 #include <driver_types.h>
 #include <cuda_runtime.h>
 #include "userInterface.hpp"
@@ -19,6 +20,7 @@ bool UserInterface::detectGpu() {
 }
 
 void UserInterface::printTestMenu() {
+  return;
     std::string menu = "---Operations on Matrices TESTS---\n";
     menu.append("[1]. Test addition\n");
     menu.append("[2]. Test multiplication\n");
@@ -26,7 +28,7 @@ void UserInterface::printTestMenu() {
     menu.append("[4]. Test inverse\n");
     menu.append("[0]. Exit test menu\n");
     menu.append(">");
-
+    int cnt = 0;
 
     char result = 'a';
     do {
@@ -63,10 +65,12 @@ void UserInterface::printTestMenu() {
             system("pause");
             system("cls");
         }
-    } while (result != '0');
+        cnt++;
+    } while (result != '0' && cnt < 100000);
 }
 
 void UserInterface::printMainMenu() {
+  int cnt = 0;
     std::string menu = "---Operations on Matrices---\n";
     menu.append("[1]. Load matrices\n");
     menu.append("[2]. Print matrices\n");
@@ -83,13 +87,14 @@ void UserInterface::printMainMenu() {
     do {
         rewind(stdin);
         printf("%s", menu.c_str());
-        scanf("%c", &result);
+        //scanf("%c", &result);
+        std::cin >> result;
         switch (result) {
         case '1': {
             printf("load\n");
-            Matrix m = ioManager.loadMatrix("test1.txt");
+            Matrix m = ioManager.loadMatrix("test.txt");
             loadedMatrices.push_back(m);
-            m.display();
+            // m.display();
             break;
         }
         case '2': {
@@ -104,6 +109,7 @@ void UserInterface::printMainMenu() {
         }
         case '3': {
             int aId, bId;
+          Matrix m;
             printf("add\n");
             printf("Index of first matrix\n>");
             scanf("%d", &aId);
@@ -117,9 +123,9 @@ void UserInterface::printMainMenu() {
                 printf("\n\n");
 
                 adder.set_matrices(loadedMatrices[aId], loadedMatrices[bId]);
-
+               
                 adder.add_matrices_CPU_single_thread();
-                Matrix m = adder.get_result();
+                m = adder.get_result();
                 m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
                 ioManager.saveMatrix(m);
                 printf("Single thread result\n");
@@ -136,7 +142,7 @@ void UserInterface::printMainMenu() {
                        adder.get_num_of_threads());
                 m.display();
                 printf("\n\n");
-
+                
                 adder.add_matrices_GPU();
                 m = adder.get_result();
                 m.set_matrix_name(
@@ -230,11 +236,54 @@ void UserInterface::printMainMenu() {
         }
         case '6': {
             printf("inverse\n");
+
+            int mId;
+            printf("Index of matrix\n>");
+            scanf("%d", &mId);
+            Matrix m;
+            try {
+              printf("Matrix %d:\n", mId);
+              //loadedMatrices[mId].display();
+              printf("\n\n");
+
+              inverser.set_matrix(loadedMatrices[mId]);
+              /*
+              inverser.add_matrices_CPU_single_thread();
+              Matrix m = inverser.get_result();
+              m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
+              ioManager.saveMatrix(m);
+              printf("Single thread result\n");
+              m.display();
+              printf("\n\n");
+              */
+              /*
+              inverser.add_matrices_CPU_multi_thread();
+              m = inverser.get_result();
+              m.set_matrix_name(
+                  m.get_matrix_name() + "_multiThreadCPU(threads: " +
+                  std::to_string(inverser.get_num_of_threads()) + ")");
+              ioManager.saveMatrix(m);
+              printf("Multi thread result (threads: %d)\n",
+                     inverser.get_num_of_threads());
+              m.display();
+              printf("\n\n");
+              */
+              inverser.inverse_matrix_GPU();
+              m = inverser.get_result();
+              m.set_matrix_name(m.get_matrix_name() + "_GPU");
+              ioManager.saveMatrix(m);
+              printf("GPU result:\n");
+              // m.display();
+              printf("\n\n");
+
+            } catch (std::exception e) {
+              printf("Error occured: %s", e.what());
+            }
             break;
         }
         case '7': {
             system("cls");
-            printTestMenu();
+            // printTestMenu();
             break;
         }
         case '0': {
@@ -247,5 +296,6 @@ void UserInterface::printMainMenu() {
         }
         system("pause");
         system("cls");
-    } while (result != '0');
+        cnt++;
+    } while (result != '0' && cnt < 10000);
 }
