@@ -117,8 +117,8 @@ void UserInterface::printMainMenu() {
                 printf("\n\n");
 
                 adder.set_matrices(loadedMatrices[aId], loadedMatrices[bId]);
-
-                adder.add_matrices_CPU_single_thread();
+                Matrix m;
+                /*adder.add_matrices_CPU_single_thread();
                 Matrix m = adder.get_result();
                 m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
                 ioManager.saveMatrix(m);
@@ -135,7 +135,7 @@ void UserInterface::printMainMenu() {
                 printf("Multi thread result (threads: %d)\n",
                        adder.get_num_of_threads());
                 m.display();
-                printf("\n\n");
+                printf("\n\n");*/
 
                 adder.add_matrices_GPU();
                 m = adder.get_result();
@@ -201,10 +201,9 @@ void UserInterface::printMainMenu() {
             try {
                 printf("Matrix %d:\n", aId);
                 loadedMatrices[aId].display();
-
+                Matrix m;
                 transposer.set_matrix(loadedMatrices[aId]);
-
-                transposer.transpose_matrix_CPU_single_thread();
+                /*transposer.transpose_matrix_CPU_single_thread();
                 Matrix m = transposer.get_result();
                 m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
                 ioManager.saveMatrix(m);
@@ -219,7 +218,16 @@ void UserInterface::printMainMenu() {
                     std::to_string(adder.get_num_of_threads()) + ")");
                 ioManager.saveMatrix(m);
                 printf("Multi thread result (threads: %d)\n",
-                    adder.get_num_of_threads());
+                    transposer.get_num_of_threads());
+                m.display();
+                printf("\n\n");*/
+
+                transposer.transpose_matrix_GPU();
+                m = transposer.get_result();
+                m.set_matrix_name(
+                    m.get_matrix_name() + "_GPU");
+                ioManager.saveMatrix(m);
+                printf("GPU result:\n");
                 m.display();
                 printf("\n\n");
             }
