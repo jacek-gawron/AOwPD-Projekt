@@ -218,9 +218,9 @@ void UserInterface::printMainMenu() {
             try {
                 printf("Matrix %d:\n", aId);
                 loadedMatrices[aId].display();
-                Matrix m;
+
                 transposer.set_matrix(loadedMatrices[aId]);
-                /*transposer.transpose_matrix_CPU_single_thread();
+                transposer.transpose_matrix_CPU_single_thread();
                 Matrix m = transposer.get_result();
                 m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
                 ioManager.saveMatrix(m);
@@ -237,7 +237,7 @@ void UserInterface::printMainMenu() {
                 printf("Multi thread result (threads: %d)\n",
                     transposer.get_num_of_threads());
                 m.display();
-                printf("\n\n");*/
+                printf("\n\n");
 
                 transposer.transpose_matrix_GPU();
                 m = transposer.get_result();

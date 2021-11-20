@@ -5,22 +5,16 @@
 #include <thread>
 #include <vector>
 
-__global__ void transpose_GPU(float* a, float* out, size_t dim_x,
-    size_t dim_y) {
-    int i = blockIdx.x;
-    int j = blockIdx.y;
-    if (i < dim_x && j < dim_y) {
-        if (dim_x == dim_y) {
-            out[j*dim_y+i] = a[i*dim_y+j];
-        }
-        else if (dim_x < dim_y) {
-            //z³y wzór (czasem dzia³a, czasem nie) (j*dim_y+1 nadaje siê tlyko do macierzy kwadratowych)
-            out[j*dim_y+i-j] = a[i*dim_y+j];
-        }
-        else if (dim_x > dim_y) {
-            //z³y wzór (czasem dzia³a, czasem nie) (j*dim_y+1 nadaje siê tlyko do macierzy kwadratowych)
-            out[j*dim_y+i+j] = a[i*dim_y+j];
-        }
+__global__ void transpose_GPU(float* a, float* out, int dim_x,
+    int dim_y) {
+    unsigned int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    unsigned int idy = blockIdx.y * blockDim.y + threadIdx.y;
+
+    if (idx < dim_y && idy < dim_x)
+    {
+        unsigned int pos = idy * dim_y + idx;
+        unsigned int newPos = idx * dim_x + idy;
+        out[newPos] = a[pos];
     }
 }
 
@@ -55,16 +49,23 @@ void MatrixTransposerComponent::transpose_matrix_CPU_multi_thread() {
 
 void MatrixTransposerComponent::transpose_matrix_GPU() {
     float *a_GPU_pointer, *out_GPU_pointer;
-    int num_of_bytes =
+    int a_bytes =
+        a.get_x_dimension() * a.get_y_dimension() * sizeof(float);
+    int out_bytes =
         output.get_x_dimension() * output.get_y_dimension() * sizeof(float);
-    cudaMalloc((void**)&a_GPU_pointer, num_of_bytes);
-    cudaMalloc((void**)&out_GPU_pointer, num_of_bytes);
-    cudaMemcpy(a_GPU_pointer, a[0], num_of_bytes, cudaMemcpyHostToDevice);
-    dim3 blocks(output.get_x_dimension(), output.get_y_dimension());
-    transpose_GPU <<<blocks, 1 >>> (
+    cudaMalloc((void**)&a_GPU_pointer, a_bytes);
+    cudaMalloc((void**)&out_GPU_pointer, out_bytes);
+    cudaMemcpy(a_GPU_pointer, a[0], a_bytes, cudaMemcpyHostToDevice);
+    int BLOCK_SIZE = 16;
+    unsigned int grid_rows = (a.get_y_dimension() + BLOCK_SIZE - 1) / BLOCK_SIZE;
+    unsigned int grid_cols = (a.get_y_dimension() + BLOCK_SIZE - 1) / BLOCK_SIZE;
+    dim3 blocksPerGrid(grid_cols, grid_rows);
+    dim3 threadsPerBlock(BLOCK_SIZE, BLOCK_SIZE);
+
+    transpose_GPU << <blocksPerGrid, threadsPerBlock >> > (
         a_GPU_pointer, out_GPU_pointer,
-        output.get_x_dimension(), output.get_y_dimension());
-    cudaMemcpy(output[0], out_GPU_pointer, num_of_bytes, cudaMemcpyDeviceToHost);
+        a.get_y_dimension(), a.get_x_dimension());
+    cudaMemcpy(output[0], out_GPU_pointer, out_bytes, cudaMemcpyDeviceToHost);
 }
 
 Matrix MatrixTransposerComponent::get_result() { return output; }
