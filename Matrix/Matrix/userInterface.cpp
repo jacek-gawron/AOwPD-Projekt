@@ -182,13 +182,24 @@ void UserInterface::printMainMenu() {
                 printf("\n\n");
 
 
-                multiplier.multiply_matrices_CPU_multi_thread();
+                /*multiplier.multiply_matrices_CPU_multi_thread();
                 m = multiplier.get_result();
                 m.set_matrix_name(m.get_matrix_name() +
                     "_multiThreadCPU(threads: " +
                     std::to_string(multiplier.get_num_of_threads()) + ")");
                 ioManager.saveMatrix(m);
                 printf("Multi thread result (threads: %d)\n",
+                    multiplier.get_num_of_threads());
+                m.display();
+                printf("\n\n");*/
+
+                multiplier.multiply_matrices_GPU();
+                m = multiplier.get_result();
+                m.set_matrix_name(m.get_matrix_name() +
+                    "_multiThreadCPU(threads: " +
+                    std::to_string(multiplier.get_num_of_threads()) + ")");
+                ioManager.saveMatrix(m);
+                printf("GPU result\n",
                     multiplier.get_num_of_threads());
                 m.display();
                 printf("\n\n");
