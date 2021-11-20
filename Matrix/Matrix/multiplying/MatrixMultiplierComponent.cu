@@ -82,6 +82,9 @@ void MatrixMultiplierComponent::multiply_matrices_GPU() {
         a_GPU_pointer, b_GPU_pointer, out_GPU_pointer,
         a.get_y_dimension(), a.get_x_dimension(), b.get_x_dimension());
     cudaMemcpy(output[0], out_GPU_pointer, out_bytes, cudaMemcpyDeviceToHost);
+    cudaFree(a_GPU_pointer);
+    cudaFree(b_GPU_pointer);
+    cudaFree(out_GPU_pointer);
 }
 
 Matrix MatrixMultiplierComponent::get_result() { return output; }

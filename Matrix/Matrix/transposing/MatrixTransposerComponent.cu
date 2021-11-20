@@ -66,6 +66,8 @@ void MatrixTransposerComponent::transpose_matrix_GPU() {
         a_GPU_pointer, out_GPU_pointer,
         a.get_y_dimension(), a.get_x_dimension());
     cudaMemcpy(output[0], out_GPU_pointer, out_bytes, cudaMemcpyDeviceToHost);
+    cudaFree(a_GPU_pointer);
+    cudaFree(out_GPU_pointer);
 }
 
 Matrix MatrixTransposerComponent::get_result() { return output; }
