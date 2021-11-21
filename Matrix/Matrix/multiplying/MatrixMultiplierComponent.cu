@@ -47,7 +47,7 @@ void MatrixMultiplierComponent::multiply_matrices_CPU_single_thread() {
 }
 
 void MatrixMultiplierComponent::multiply_matrices_CPU_multi_thread() {
-    num_of_cores = output.get_x_dimension();
+    num_of_cores = output.get_y_dimension();
     std::vector<std::thread> threads;
     for (int i{ 0 }; i < num_of_cores; i++) {
         threads.push_back(std::thread(&MatrixMultiplierComponent::thread_CPU_fun, this, i));
