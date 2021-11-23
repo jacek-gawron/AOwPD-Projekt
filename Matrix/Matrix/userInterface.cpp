@@ -193,6 +193,15 @@ void UserInterface::printMainMenu() {
                 m.display();
                 printf("\n\n");
 
+                multiplier.multiply_matrices_GPU();
+                m = multiplier.get_result();
+                m.set_matrix_name(m.get_matrix_name() + "_GPU");
+                ioManager.saveMatrix(m);
+                printf("GPU result\n",
+                    multiplier.get_num_of_threads());
+                m.display();
+                printf("\n\n");
+
             }
             catch (std::exception e) {
                 printf("Error occured: %s", e.what());
@@ -207,9 +216,9 @@ void UserInterface::printMainMenu() {
             try {
                 printf("Matrix %d:\n", aId);
                 loadedMatrices[aId].display();
-                Matrix m;
+
                 transposer.set_matrix(loadedMatrices[aId]);
-                /*transposer.transpose_matrix_CPU_single_thread();
+                transposer.transpose_matrix_CPU_single_thread();
                 Matrix m = transposer.get_result();
                 m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU");
                 ioManager.saveMatrix(m);
@@ -226,7 +235,7 @@ void UserInterface::printMainMenu() {
                 printf("Multi thread result (threads: %d)\n",
                     transposer.get_num_of_threads());
                 m.display();
-                printf("\n\n");*/
+                printf("\n\n");
 
                 transposer.transpose_matrix_GPU();
                 m = transposer.get_result();
