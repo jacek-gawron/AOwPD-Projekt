@@ -15,6 +15,7 @@ class Matrix {
   inline size_t get_y_dimension() const { return dim_y; }
   inline std::string get_matrix_name() const { return matrix_name; }
   inline void set_matrix_name(std::string str) { matrix_name = str; }
+  
 
   float* operator[](int index);
   Matrix& operator=(const Matrix& src);

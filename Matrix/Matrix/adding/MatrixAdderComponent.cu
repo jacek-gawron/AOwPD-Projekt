@@ -24,7 +24,8 @@ void MatrixAdderComponent::set_matrices(Matrix a, Matrix b) {
   }
   this->a = a;
   this->b = b;
-  this->output = Matrix(a.get_matrix_name() + b.get_matrix_name() + "addOP",
+  this->output =
+      Matrix(a.get_matrix_name() + "_" + b.get_matrix_name() + "_addOP",
                         a.get_x_dimension(), a.get_y_dimension());
 }
 

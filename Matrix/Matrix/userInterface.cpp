@@ -135,7 +135,7 @@ void UserInterface::printMainMenu() {
                 adder.add_matrices_CPU_multi_thread();
                 m = adder.get_result();
                 m.set_matrix_name(m.get_matrix_name() +
-                                  "_multiThreadCPU(threads: " +
+                                  "_multiThreadCPU(threads-" +
                                   std::to_string(adder.get_num_of_threads()) + ")");
                 ioManager.saveMatrix(m);
                 printf("Multi thread result (threads: %d)\n",
@@ -185,7 +185,7 @@ void UserInterface::printMainMenu() {
                 multiplier.multiply_matrices_CPU_multi_thread();
                 m = multiplier.get_result();
                 m.set_matrix_name(m.get_matrix_name() +
-                    "_multiThreadCPU(threads: " +
+                    "_multiThreadCPU(threads-" +
                     std::to_string(multiplier.get_num_of_threads()) + ")");
                 ioManager.saveMatrix(m);
                 printf("Multi thread result (threads: %d)\n",
@@ -220,7 +220,7 @@ void UserInterface::printMainMenu() {
                 transposer.transpose_matrix_CPU_multi_thread();
                 m = transposer.get_result();
                 m.set_matrix_name(m.get_matrix_name() +
-                    "_multiThreadCPU(threads: " +
+                    "_multiThreadCPU(threads-" +
                     std::to_string(adder.get_num_of_threads()) + ")");
                 ioManager.saveMatrix(m);
                 printf("Multi thread result (threads: %d)\n",
@@ -276,12 +276,73 @@ void UserInterface::printMainMenu() {
               m.display();
               printf("\n\n");
               */
+              inverser.prepare();
+              inverser.enable_swapping();
+              inverser.inverse_matrix_CPU_single_thread();
+              m = inverser.get_result();
+              m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU(swapping)");
+              ioManager.saveMatrix(m);
+              printf("Single thread result(swapping):\n");
+              m.display();
+              printf("\n\n");
+
+              inverser.prepare();
+              inverser.disable_swapping();
+              inverser.inverse_matrix_CPU_single_thread();
+              m = inverser.get_result();
+              m.set_matrix_name(m.get_matrix_name() + "_singleThreadCPU(no_swapping)");
+              ioManager.saveMatrix(m);
+              printf("Single thread result(no_swapping):\n");
+              m.display();
+              printf("\n\n");
+
+
+
+              inverser.prepare();
+              inverser.enable_swapping();
+              inverser.inverse_matrix_CPU_multi_thread();
+              m = inverser.get_result();
+              m.set_matrix_name(m.get_matrix_name() + "_multiThreadCPU(swapping; threads-" +
+                  std::to_string(inverser.get_num_of_threads()) + ")");
+              ioManager.saveMatrix(m);
+              printf("Multi thread result(swapping; threads: %d):\n", inverser.get_num_of_threads());
+              m.display();
+              printf("\n\n");
+
+              inverser.prepare();
+              inverser.disable_swapping();
+              inverser.inverse_matrix_CPU_multi_thread();
+              m = inverser.get_result();
+              m.set_matrix_name(m.get_matrix_name() +
+                                "_multiThreadCPU(no_swapping; threads-" +
+                                std::to_string(inverser.get_num_of_threads()) +
+                                ")");
+              ioManager.saveMatrix(m);
+              printf("Multi thread result(no_swapping; threads: %d):\n",
+                     inverser.get_num_of_threads());
+              m.display();
+              printf("\n\n");
+
+
+
+              inverser.prepare();
+              inverser.enable_swapping();
               inverser.inverse_matrix_GPU();
               m = inverser.get_result();
-              m.set_matrix_name(m.get_matrix_name() + "_GPU");
+              m.set_matrix_name(m.get_matrix_name() + "_GPU(swapping)");
               ioManager.saveMatrix(m);
-              printf("GPU result:\n");
-              // m.display();
+              printf("GPU result(swapping):\n");
+              m.display();
+              printf("\n\n");
+
+              inverser.prepare();
+              inverser.disable_swapping();
+              inverser.inverse_matrix_GPU();
+              m = inverser.get_result();
+              m.set_matrix_name(m.get_matrix_name() + "_GPU(no_swapping)");
+              ioManager.saveMatrix(m);
+              printf("GPU result(no_swapping):\n");
+              m.display();
               printf("\n\n");
 
             } catch (std::exception e) {
