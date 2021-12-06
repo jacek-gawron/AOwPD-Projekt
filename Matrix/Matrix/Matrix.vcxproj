@@ -99,6 +99,7 @@
     <ClInclude Include="cudaStatus.hpp" />
     <ClInclude Include="adding\MatrixAdderComponent.h" />
     <ClInclude Include="inverse\MatrixInverserComponent.h" />
+    <ClInclude Include="Tester.h" />
     <ClInclude Include="utils\matrix\MatrixUtils.h" />
     <ClInclude Include="multiplying\MatrixMultiplierComponent.h" />
     <ClInclude Include="transposing\MatrixTransposerComponent.h" />
@@ -107,6 +108,7 @@
     <ClInclude Include="utils\matrix\Matrix.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Tester.cpp" />
     <ClCompile Include="utils\matrix\MatrixUtils.cpp" />
     <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
     <ClCompile Include="userInterface.cpp" />

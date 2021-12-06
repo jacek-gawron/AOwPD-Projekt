@@ -29,6 +29,7 @@
     <ClInclude Include="multiplying\MatrixMultiplierComponent.h" />
     <ClInclude Include="inverse\MatrixInverserComponent.h" />
     <ClInclude Include="utils\matrix\MatrixUtils.h" />
+    <ClInclude Include="Tester.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="userInterface.cpp">
@@ -37,5 +38,6 @@
     <ClCompile Include="utils\matrix\Matrix.cpp" />
     <ClCompile Include="utils\IOManager\MatrixIOManager.cpp" />
     <ClCompile Include="utils\matrix\MatrixUtils.cpp" />
+    <ClCompile Include="Tester.cpp" />
   </ItemGroup>
 </Project>

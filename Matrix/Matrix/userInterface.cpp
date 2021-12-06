@@ -7,6 +7,7 @@
 #include <cuda_runtime.h>
 #include "userInterface.hpp"
 #include "cudaStatus.hpp"
+#include "Tester.h"
 
 UserInterface::UserInterface() {
 
@@ -79,6 +80,7 @@ void UserInterface::printMainMenu() {
     menu.append("[5]. Matrix transposition\n");
     menu.append("[6]. Matrix inverse\n");
     menu.append("[7]. Test menu\n");
+    menu.append("[8]. Test from file\n");
     menu.append("[0]. Exit\n");
     menu.append(">");
 
@@ -91,9 +93,16 @@ void UserInterface::printMainMenu() {
         std::cin >> result;
         switch (result) {
         case '1': {
-            printf("load\n");
-            Matrix m = ioManager.loadMatrix("test.txt");
-            loadedMatrices.push_back(m);
+            std::cout << "Podaj plik z macierza\n>";
+            try {
+              std::string filePath;
+              std::cin >> filePath;
+              Matrix m = ioManager.loadMatrix(filePath);
+              loadedMatrices.push_back(m);
+            } catch (...) {
+              std::cout << "Wst¹pi³ blad" << std::endl;
+            }
+           
             // m.display();
             break;
         }
@@ -362,6 +371,18 @@ void UserInterface::printMainMenu() {
         case '7': {
             system("cls");
             // printTestMenu();
+            break;
+        }
+        case '8': {
+            std::string filePath;
+            std::cout << "Podaj sciezke do pliku z konfiguracja\n>";
+            std::cin >> filePath;
+            try {
+                Tester().testFromConfig(filePath);
+            } catch (...) {
+                std::cout << "Wst¹pi³ blad" << std::endl;
+            }
+            
             break;
         }
         case '0': {
