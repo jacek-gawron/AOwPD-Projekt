@@ -1,0 +1,8 @@
+test.txt
+test.txt
+test.txt
+###
+addition 10 0 1 addition_time.csv
+multiplication 10 0 1 multiplication_time.csv
+transposition 10 0 0 transposition_time.csv
+inverse 10 0 0 inverse_time.csv
